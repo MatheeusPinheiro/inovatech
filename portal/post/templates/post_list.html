@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+
+{% block title  %}Todas as tarefas{% endblock  %}
+
+{% block content %}
+<div class="row d-flex justify-content-end">
+
+	{% for el in post_list %}
+
+		<div class="card mb-3 col-sm-7">
+			<div class="card-header d-flex justify-content-between">
+				{{el.published_date}} 
+				<span class="badge rounded-pill text-bg-success">{{el.user.first_name}} - {{el.user.last_name}}</span>
+			</div>
+			<div class="card-body">
+				<h5 class="card-title"><a class="link" href="{% url 'post-detail' el.pk %}">{{el.title}}</a></h5>
+				<div class="col-5 text-truncate">
+					<p class="card-text">{{el.description}}</p>
+				</div>
+				<a href="{{el.create_file}}" class="link">arquivo</a>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+
+{% include 'page.html' %}
+{% endblock  %}

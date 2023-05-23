@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	{% include 'base/_head.html' %}
+	<title> {% block title %} {% endblock %}</title>
+</head>
+
+
+<body>
+	{% include 'base/navbar.html' %}
+
+	<div class="container py-3 px-1 d-flex flex-column">
+		{% include 'base/message.html' %}
+		{% block content %} 
+	
+		{% endblock %}
+	
+	</div>
+	
+
+	{% include 'base/footer.html' %}
+</body>
+</html>

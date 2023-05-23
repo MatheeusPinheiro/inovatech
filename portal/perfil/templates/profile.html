@@ -1,0 +1,72 @@
+{% extends 'base/base.html' %}
+
+	
+{%block title%}Meu perfil{% endblock %}
+
+{% block content %}
+
+
+<div id="perfil-user" class="d-flex flex-wrap gap-5 justify-content-center align-items-center">
+
+	<div class="profile-logo">
+		<img src="{{perfil.profile.image.url}}" class="logo"  />
+	</div>
+
+	<div class="profile-info">
+	
+		<div class="profile-info">
+			<div class="d-flex justify-content-between align-items-center ">
+				<h2>{{perfil.first_name}} - {{perfil.last_name}}</h2>
+				<a class="link-warning" href="{% url 'edit-profile' perfil.pk %}"><i class="bi bi-gear fs-1"></i></a>
+			</div>	
+
+
+			<p><strong>Ocupação:</strong> {{perfil.profile.occupation}}</p>
+			
+
+			<p><strong>Genero:</strong> {{perfil.profile.gender}}</p>
+
+			<div class="d-flex gap-3">
+				<p><strong>Contato:</strong> {{perfil.profile.phone}}</p>
+				<p><strong>Cidade:</strong> {{perfil.profile.city}}</p>
+				<p><strong>País:</strong> {{perfil.profile.country}}</p>
+			</div>
+
+		</div>
+		
+	</div>
+
+</div>
+<div>
+<hr/>
+
+	<div  class="container  my-5  ">
+		<div id="perfil-atividades" class="container d-flex justify-content-end  flex-column">
+			{% for el in get_posts %}
+
+				<div id="card-perfil" class="card mb-3 col-sm-6">
+					<div class="card-header d-flex justify-content-between">
+						{{el.published_date}} 
+						
+							{% if  el.user == request.user %}
+							<div id="btn-infos">
+							<a id="btn-info" class="btn btn-warning" href="{% url 'post-update' el.pk %}"><i class="bi bi-pencil-square"></i></a id="btn-info">
+							<a id="btn-info" class="btn btn-danger" href="{% url 'post-delete' el.pk %}"><i class="bi bi-trash"></i></a>
+							</div>
+							{% endif %}
+					
+					</div>
+					<div class="card-body">
+						<h5 class="card-title"><a class="link" href="{% url 'post-detail' el.pk %}">{{el.title}}</a></h5>
+						<div class="col-5 text-truncate">
+							<p class="card-text">{{el.description}}</p>
+						</div>
+						
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+
+{% endblock %}

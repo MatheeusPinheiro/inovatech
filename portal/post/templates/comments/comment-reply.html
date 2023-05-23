@@ -1,0 +1,56 @@
+{% load static %}
+<div class="ms-5">
+    {% for child_comment in comment.children %} 
+    <div class="d-flex mt-4">  
+
+        <div class="bg-light p-2">  
+            <img src="{{child_comment.user.profile.image.url}}" class="navbar-logo mr-2"> 
+        </div>
+    
+        <div class="bg-gray border border-dark rounded-3 w-100 p-3">    
+
+            <div class="d-flex justify-content-start">  
+                <small><strong>{{child_comment.user.first_name}} {{child_comment.user.last_name}}</strong></small>  
+                <small class="mx-3 fst-italic">{{child_comment.created}}</small> 
+            </div> 
+    
+            <p class="text-break mb-3 mt-3">{{child_comment.comment}}</p> 
+    
+            <div class="d-flex justify-content-start">  
+                {% if request.user == child_comment.user %}   
+                <a href="#" class="link-secondary"
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#commentReply_{{child_comment.id}}" 
+                    aria-expanded="false" 
+                    aria-controls="collapsecommentreply"><i class="fas fa-edit mx-2"></i></a>   
+                
+                <form method="POST" action="{% url 'comment-delete' post.pk child_comment.pk %}">
+                    {% csrf_token %}  
+                    <button type="submit" class="link-secondary btn btn-transparent m-0 p-0"><i class="fas fa-trash"></i></button> 
+                </form> 
+
+                {% endif %}    
+            </div> 
+
+        </div>   
+    </div> 
+
+    <!-- Editar subComentario  -->
+    <div class="collapse mt-2 w-100" id="commentReply_{{child_comment.id}}"> 
+        <form method="POST" action="{% url 'comment-edit' post.pk child_comment.pk %}"> 
+            {% csrf_token %}
+            <textarea class="form-control" rows="3" name="comment" id="comment" placeholder="Escreva um comentário...">{{child_comment.comment}}</textarea>  
+            <div class="d-flex justify-content-between align-items-center py-2">  
+                <button type="submit" class="btn btn-dark">Enviar</button>    
+                <button class="btn-default btn-white-sm" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#commentReply_{{child_comment.id}}" aria-expanded="false" aria-controls="collapsecommentreply">
+                    <i class="fas fa-times fa-1x"></i>
+                </button>  
+            </div>  
+        </form> 
+    </div> 
+
+    {% endfor %} 
+</div>
+  
+

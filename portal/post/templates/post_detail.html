@@ -1,0 +1,63 @@
+{% extends 'base/base.html' %}
+
+{% block title  %}Detalhes{% endblock  %}
+
+{% block content %}
+	<div id="post" class="row">
+		<div class="col-sm-8 rounded border shadow p-4">
+			<div class="d-flex justify-content-between">
+				<span>{{post.published_date}}</span>
+				<div>
+					{% if  post.user == request.user %}
+						<a class="btn btn-warning" href="{% url 'post-update' post.pk %}"><i class="bi bi-pencil-square"></i></a>
+						<a class="btn btn-danger" href="{% url 'post-delete' post.pk %}"><i class="bi bi-trash"></i></a>
+					{% endif %}
+				</div>
+			</div>
+			<span class="mt-2 badge  text-bg-primary px-4 fs-4">{{post.user.first_name}}</span>
+			<hr/>
+			<h2>{{post.title}}</h2>
+			<hr/>
+			<p>{{post.description}}</p>
+			<a href="{{post.create_file.url}}" target="_black">arquivo</a>
+		</div>
+	</div>
+
+	
+
+	<!--COMENTARIOS-->
+
+	<div class="mt-5">  
+		{% if user.is_authenticated %} 
+		<form method="POST">
+			{% csrf_token %}
+			<textarea class="form-control" rows="3" name="comment" id="comment" placeholder="Escreva um comentário..."></textarea> 
+			<div class="text-end mt-2">
+				<button type="submit" class="btn btn-outline-primary">Comentar</button>
+			</div>
+		</form> 
+		{% else %} 
+		<div class="text-center mb-3">
+			<h4>Olá,</h4>
+			<p>Você precisa fazer login no sistema para comentar.</p>
+			<a class="btn btn-dark" href="{% url 'login' %}">
+				<i class="fas fa-sign-in-alt fa-2x"></i>
+			</a>
+		</div>  
+		{% endif %} 
+		
+		<h4>{{comments_count}} Comentários</h4>
+		 
+		{% for comment in comments %}
+		{% if comment.is_parent %}   
+			{% include "comments/comment-edit.html" %}
+			{% comment %} {% include "comments/comment-reply.html" %}  {% endcomment %}
+		{% endif %}
+		{% endfor %} 
+
+	</div>  
+	
+</div>
+
+
+{% endblock  %}

@@ -1,0 +1,16 @@
+{% extends "base/base.html" %}
+
+{% block content %} 
+
+<div class="row align-items-center justify-content-center"> 
+    <form class="col-md-6 border shadow-sm p-3" 
+        method="POST" action="{% url 'edit-profile' user.pk %}" autocomplete="off" enctype="multipart/form-data">
+        {% csrf_token %}  
+        <h2>Atualizar perfil, {{profile.user.first_name}} {{profile.user.last_name}}</h2>  
+        <img src="{{profile.image.url}}" class="logo" alt="">  
+        {{form.as_p}}
+        <button type="submit" class="btn btn-warning" name="btn_adicionar">Atualizar</button>
+    </form>
+</div>
+
+{% endblock %}

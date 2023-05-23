@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block title  %}Deletar tarefa{% endblock  %}
+
+{% block content %}
+<div class="row d-flex justify-content-center">
+<form class="col-sm-8 shadows border py-2" method="post" action="{% url 'post-delete' object.pk %}" enctype="multipart/form-data">
+	{% csrf_token %}
+
+	<h2 class="mb-2">Deletar</h2>
+
+	<div class="d-flex justify-content-end">
+		<button type="submit" class="btn btn-danger px-4" name="bnt_adicionar">Deletar</button>
+	</div>
+</form>
+</div>
+{% endblock  %}
