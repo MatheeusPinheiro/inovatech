@@ -68,6 +68,21 @@ MIDDLEWARE = [
     
 ]
 
+
+
+
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "numReplicas": 1,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  }
+}
+
 ROOT_URLCONF = "portal.urls"
 
 TEMPLATES = [
